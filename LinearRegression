@@ -1,0 +1,43 @@
+##**LINEAR REGRESSION**
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+x = pd.read_csv('https://github.com/joshuacecil/Datasets/raw/main/Training%20Data%20for%20Linear%20Regression%20-%20Training%20Data%20for%20Linear%20Regression.csv')
+
+X_train=x['Max Temp']
+r=np.array(X_train)
+X_train=r.reshape(-1,1)
+
+
+y_train=x['Solar Radiation']
+r=np.array(y_train)
+y_train=r.reshape(-1,1)
+
+li=LinearRegression()
+li.fit(X_train,y_train)
+
+tr=pd.read_csv('https://github.com/joshuacecil/Datasets/raw/main/Testing%20Data%20for%20Linear%20Regression%20-%20Testing%20Data%20for%20Linear%20Regression.csv')
+
+x_test=tr['Max Temp']
+r=np.array(x_test)
+x_test=r.reshape(-1,1)
+
+
+y_test=tr['Solar Radiation']
+r=np.array(y_test)
+y_test=r.reshape(-1,1)
+
+y_pred=li.predict(x_test)
+y_pred.shape
+
+print(r2_score(y_test,y_pred))
+
+plt.scatter(x_test,y_test,marker='^',label='Actual')
+plt.scatter(x_test,y_pred,marker = 's',label='Predict')
+plt.xlabel('Test Data')
+plt.ylabel('Actual vs Predict')
+plt.legend(loc='lower right')
+plt.show()
