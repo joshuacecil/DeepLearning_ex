@@ -1,0 +1,46 @@
+##**LOGISTIC REGRESSION**
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
+
+X=pd.read_csv('https://github.com/joshuacecil/Datasets/raw/main/Train%20-%20Train.csv')
+X.columns
+
+X_train=X[['Latitude', 'Longitude', 'Altitude', 'min Temo', 'Max Temp','Sunshine Hour']]
+X_train.shape
+
+y_train=X['Solar Radiation']
+y_train.shape
+
+lr = LogisticRegression()
+lr.fit(X_train,y_train)
+
+T = pd.read_csv('https://github.com/joshuacecil/Datasets/raw/main/Solar%20Test%20-%20Solar%20Test.csv')
+
+X_test=T[['Latitude', 'Longitude', 'Altitude', 'min Temo', 'Max Temp','Sunshine Hour']]
+y_test=T['Solar Radiation']
+
+y_pred=lr.predict(X_test)
+y_pred.shape
+
+##**Evaluating Model**
+
+print(confusion_matrix(y_test,y_pred))
+
+print(classification_report(y_test,y_pred))
+
+a=(accuracy_score(y_test,y_pred))
+print(a)
+
+error = 1 - a
+print(error)
+
+##**Predicting**
+
+x1=X.sample()
+
+x1_test=x1[['Latitude', 'Longitude', 'Altitude', 'min Temo', 'Max Temp','Sunshine Hour']]
+
+y1_pred=lr.predict(x1_test)
+y1_pred
